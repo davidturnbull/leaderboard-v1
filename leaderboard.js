@@ -11,7 +11,14 @@ if(Meteor.isClient){
 
         // Retrieve all of the data from the "PlayersList" collection
         return PlayersList.find()
-        
+
+    }
+  });
+
+  // Events trigger code when certain actions are taken
+  Template.leaderboard.events({
+    'click .player': function(){
+      console.log("You clicked a .player element");
     }
   });
 
