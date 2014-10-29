@@ -1,13 +1,3 @@
-<head>
-    <title>Leaderboard</title>
-</head>
-<body>
-    <h1>Leaderboard</h1>
-    {{> loginButtons}}
-    {{> leaderboard}}
-    {{> addPlayerForm}}
-</body>
-
 <template name="leaderboard">
 	<ul>
 	    {{#each player}}
@@ -22,13 +12,4 @@
 			    <li>Selected Player: {{showSelectedPlayer.name}}</li>
 			{{/if}}
 	</ul>
-</template>
-
-<template name="addPlayerForm">
-    {{#if currentUser}}
-        <form>
-            <input type="text" name="playerName">
-            <input type="submit" value="Add Player">
-        </form>
-    {{/if}}
 </template>
