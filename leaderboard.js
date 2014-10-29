@@ -10,7 +10,7 @@ if(Meteor.isClient){
     'player': function(){
 
         // Retrieve all of the data from the "PlayersList" collection
-        return PlayersList.find()
+        return PlayersList.find({}, {sort: {score: -1, name: 1} })
 
     },
     'selectedClass': function(){
@@ -26,7 +26,17 @@ if(Meteor.isClient){
 
             // Return a CSS class
             return "selected"
+            
         }
+
+    },
+    'showSelectedPlayer': function(){
+
+      // Get the ID of the player that's been clicked
+      var selectedPlayer = Session.get('selectedPlayer');
+
+      // Retrieve a single document from the collection
+      return PlayersList.findOne(selectedPlayer)
 
     }
   });
@@ -40,6 +50,25 @@ if(Meteor.isClient){
 
           // Create a session to store the unique ID of the clicked player
           Session.set('selectedPlayer', playerId);
+
+      },
+      'click .increment': function(){
+
+        // Get the ID of the player that's been clicked
+        var selectedPlayer = Session.get('selectedPlayer');
+
+        // Update a document and increment the score field by 5
+        PlayersList.update(selectedPlayer, {$inc: {score: 5} });
+
+      },
+      'click .decrement': function(){
+
+        // Get the ID of the player that's been clicked
+        var selectedPlayer = Session.get('selectedPlayer');
+
+        // Update a document and decrement the score field by 5
+        PlayersList.update(selectedPlayer, {$inc: {score: -5} });
+
       }
   });
 
