@@ -5,6 +5,9 @@ PlayersList = new Mongo.Collection('players');
 // Code that only runs on the client (within the web browser)
 if(Meteor.isClient){
 
+  // "Catch" the selection of data from the Meteor.publish function
+  Meteor.subscribe('thePlayers');
+
   // Helper functions execute code within templates
   Template.leaderboard.helpers({
     'player': function(){
@@ -111,5 +114,16 @@ if(Meteor.isClient){
 
 // Code that only runs on the server (where the application is hosted)
 if(Meteor.isServer){
+
+  // Transmit a selection of data into the ether
+  Meteor.publish('thePlayers', function(){
+
+    // Get the ID of the current user
+    var currentUserId = this.userId;
+
+    // Return players "owned" by the current user
+    return PlayersList.find({createdBy: currentUserId})
+
+  });
 
 }
