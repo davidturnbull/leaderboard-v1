@@ -26,7 +26,7 @@ if(Meteor.isClient){
 
             // Return a CSS class
             return "selected"
-            
+
         }
 
     },
@@ -69,7 +69,34 @@ if(Meteor.isClient){
         // Update a document and decrement the score field by 5
         PlayersList.update(selectedPlayer, {$inc: {score: -5} });
 
+      },
+      'click .remove': function(){
+
+        // Get the ID of the player that's been clicked
+        var selectedPlayer = Session.get('selectedPlayer');
+
+        // Remove a document from the collection
+        PlayersList.remove(selectedPlayer);
+
       }
+  });
+
+  Template.addPlayerForm.events({
+    'submit form': function(event){
+
+        // Prevent the browser from applying default behaviour to the form
+        event.preventDefault();
+
+        // Get the value from the "playerName" text field
+        playerNameVar = event.target.playerName.value;
+
+        // Insert the new player into the collection
+        PlayersList.insert({
+          name: playerNameVar,
+          score: 0
+        });
+
+    }
   });
 
 }
