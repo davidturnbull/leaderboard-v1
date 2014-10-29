@@ -12,14 +12,35 @@ if(Meteor.isClient){
         // Retrieve all of the data from the "PlayersList" collection
         return PlayersList.find()
 
+    },
+    'selectedClass': function(){
+
+        // Get the ID of the player being iterated through
+        var playerId = this._id;
+
+        // Get the ID of the player that's been clicked
+        var selectedPlayer = Session.get('selectedPlayer');
+
+         // Do these IDs match?
+        if(playerId == selectedPlayer){
+
+            // Return a CSS class
+            return "selected"
+        }
+
     }
   });
 
   // Events trigger code when certain actions are taken
   Template.leaderboard.events({
-    'click .player': function(){
-      console.log("You clicked a .player element");
-    }
+      'click .player': function(){
+
+          // Retrieve the unique ID of the player that's been clicked
+          var playerId = this._id;
+
+          // Create a session to store the unique ID of the clicked player
+          Session.set('selectedPlayer', playerId);
+      }
   });
 
 }

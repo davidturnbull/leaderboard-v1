@@ -9,7 +9,7 @@
 <template name="leaderboard">
 	<ul>
 	    {{#each player}}
-	        <li class="player">{{name}}: {{score}}</li>
+	        <li class="player {{selectedClass}}">{{name}}: {{score}}</li>
 	    {{/each}}
 	</ul>
 </template>
