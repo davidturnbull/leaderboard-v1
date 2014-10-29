@@ -9,8 +9,12 @@ if(Meteor.isClient){
   Template.leaderboard.helpers({
     'player': function(){
 
-        // Retrieve all of the data from the "PlayersList" collection
-        return PlayersList.find({}, {sort: {score: -1, name: 1} })
+      // Get the ID of the current user
+      var currentUserId = Meteor.userId();
+
+      // Retrieve data that belongs to the current user
+      return PlayersList.find({createdBy: currentUserId},
+                              {sort: {score: -1, name: 1}});
 
     },
     'selectedClass': function(){
@@ -90,10 +94,14 @@ if(Meteor.isClient){
         // Get the value from the "playerName" text field
         playerNameVar = event.target.playerName.value;
 
+        // Get the ID of the current user
+        var currentUserId = Meteor.userId();
+
         // Insert the new player into the collection
         PlayersList.insert({
           name: playerNameVar,
-          score: 0
+          score: 0,
+          createdBy: currentUserId
         });
 
     }
